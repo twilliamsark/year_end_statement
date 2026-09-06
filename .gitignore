@@ -1,0 +1,6 @@
+/.bundle/
+/pkg/
+/tmp/
+/.yardoc
+/coverage/
+*.gem
