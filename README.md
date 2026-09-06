@@ -1,34 +1,34 @@
-# YearEndStatements
+# CCYearEndStatement
 
-`YearEndStatements` parses Bank of America year-end summary PDFs and CSV exports into a structured Ruby result.
+`CCYearEndStatement` parses Bank of America year-end summary PDFs and CSV exports into a structured Ruby result.
 
 The gem provides:
 
-- `YearEndStatements::Extractor` for PDFs
-- `YearEndStatements::CSVWriter` for writing flat transaction CSV files
-- `YearEndStatements::CSVExtractor` for rebuilding structured results from CSV files
+- `CCYearEndStatement::Extractor` for PDFs
+- `CCYearEndStatement::CSVWriter` for writing flat transaction CSV files
+- `CCYearEndStatement::CSVExtractor` for rebuilding structured results from CSV files
 
 ## Installation
 
 Add the gem to your application:
 
 ```ruby
-gem "year_end_statements", path: "/path/to/year_end_statements"
+gem "cc_year_end_statement", path: "/path/to/cc_year_end_statement"
 ```
 
 Or install it directly after building:
 
 ```bash
-gem build year_end_statements.gemspec
-gem install year_end_statements-0.1.0.gem
+gem build cc_year_end_statement.gemspec
+gem install cc_year_end_statement-0.1.0.gem
 ```
 
 ## Quick Start
 
 ```ruby
-require "year_end_statements"
+require "cc_year_end_statement"
 
-result = YearEndStatements::Extractor.call(
+result = CCYearEndStatement::Extractor.call(
   filename: "/Users/todd/Documents/BoA_CC_YearEndSummary_2025.pdf"
 )
 

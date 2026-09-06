@@ -2,7 +2,7 @@
 
 require "test_helper"
 
-class YearEndStatementsCSVExtractorTest < Minitest::Test
+class CCYearEndStatementCSVExtractorTest < Minitest::Test
   FakeExtractor = Struct.new(:result) do
     def call(filename:)
       raise ArgumentError, "filename is required" if filename.nil? || filename.to_s.strip.empty?
@@ -13,7 +13,7 @@ class YearEndStatementsCSVExtractorTest < Minitest::Test
 
   def test_requires_a_filename
     error = assert_raises(ArgumentError) do
-      YearEndStatements::CSVExtractor.call(filename: nil)
+      CCYearEndStatement::CSVExtractor.call(filename: nil)
     end
 
     assert_match(/filename is required/i, error.message)
@@ -21,7 +21,7 @@ class YearEndStatementsCSVExtractorTest < Minitest::Test
 
   def test_raises_when_the_csv_file_is_missing
     assert_raises(Errno::ENOENT) do
-      YearEndStatements::CSVExtractor.call(filename: "/tmp/missing-year-end-summary.csv")
+      CCYearEndStatement::CSVExtractor.call(filename: "/tmp/missing-year-end-summary.csv")
     end
   end
 
@@ -36,7 +36,7 @@ class YearEndStatementsCSVExtractorTest < Minitest::Test
         2025-05-09|Travel and Transportation|Hotels|COMFORT INNS|ORLANDO, FL|-100.0
       CSV
 
-      result = YearEndStatements::CSVExtractor.call(filename: path)
+      result = CCYearEndStatement::CSVExtractor.call(filename: path)
 
       assert_equal path, result.filename
       assert_nil result.page_count
@@ -67,7 +67,7 @@ class YearEndStatementsCSVExtractorTest < Minitest::Test
         2025-11-12,Education,Education,UDEMY ONLINE COURSES,"UDEMY.COM, CA",30.36
       CSV
 
-      result = YearEndStatements::CSVExtractor.call(filename: path, field_separator: ",")
+      result = CCYearEndStatement::CSVExtractor.call(filename: path, field_separator: ",")
 
       assert_equal ["Education"], result.categories.map(&:name)
       assert_equal BigDecimal("30.36"), result.categories.first.total
@@ -84,7 +84,7 @@ class YearEndStatementsCSVExtractorTest < Minitest::Test
         2025-11-12,Education,Education,UDEMY ONLINE COURSES,"UDEMY.COM, CA",30.36
       CSV
 
-      result = YearEndStatements::CSVExtractor.call(filename: path)
+      result = CCYearEndStatement::CSVExtractor.call(filename: path)
 
       assert_equal ["Education"], result.categories.map(&:name)
       assert_equal BigDecimal("30.36"), result.transactions.first.amount
@@ -101,7 +101,7 @@ class YearEndStatementsCSVExtractorTest < Minitest::Test
       CSV
 
       error = assert_raises(ArgumentError) do
-        YearEndStatements::CSVExtractor.call(filename: path)
+        CCYearEndStatement::CSVExtractor.call(filename: path)
       end
 
       assert_match(/unexpected CSV headers/i, error.message)
@@ -113,12 +113,12 @@ class YearEndStatementsCSVExtractorTest < Minitest::Test
       source_path = File.join(dir, "statement.pdf")
       File.write(source_path, "pdf")
 
-      csv_path = YearEndStatements::CSVWriter.call(
+      csv_path = CCYearEndStatement::CSVWriter.call(
         filename: source_path,
         extractor: FakeExtractor.new(extractor_result)
       )
 
-      result = YearEndStatements::CSVExtractor.call(filename: csv_path)
+      result = CCYearEndStatement::CSVExtractor.call(filename: csv_path)
 
       assert_equal extractor_result.transactions, result.transactions
       assert_equal extractor_result.categories.map(&:name), result.categories.map(&:name)
@@ -129,19 +129,19 @@ class YearEndStatementsCSVExtractorTest < Minitest::Test
   private
 
   def extractor_result
-    YearEndStatements::Extractor::Result.new(
+    CCYearEndStatement::Extractor::Result.new(
       filename: "/tmp/statement.pdf",
       page_count: 1,
       categories: [
-        YearEndStatements::Extractor::Category.new(
+        CCYearEndStatement::Extractor::Category.new(
           name: "Merchandise",
           total: BigDecimal("740.61"),
           subcategories: [
-            YearEndStatements::Extractor::Subcategory.new(
+            CCYearEndStatement::Extractor::Subcategory.new(
               name: "Clothing",
               total: BigDecimal("740.61"),
               transactions: [
-                YearEndStatements::Extractor::Transaction.new(
+                CCYearEndStatement::Extractor::Transaction.new(
                   date: Date.new(2025, 7, 1),
                   description: "MENS WAREHOUSE 1534",
                   location: "JONESBORO, AR",
@@ -153,15 +153,15 @@ class YearEndStatementsCSVExtractorTest < Minitest::Test
             )
           ]
         ),
-        YearEndStatements::Extractor::Category.new(
+        CCYearEndStatement::Extractor::Category.new(
           name: "Travel and Transportation",
           total: BigDecimal("-100.0"),
           subcategories: [
-            YearEndStatements::Extractor::Subcategory.new(
+            CCYearEndStatement::Extractor::Subcategory.new(
               name: "Hotels",
               total: BigDecimal("-100.0"),
               transactions: [
-                YearEndStatements::Extractor::Transaction.new(
+                CCYearEndStatement::Extractor::Transaction.new(
                   date: Date.new(2025, 5, 9),
                   description: "COMFORT INNS",
                   location: "ORLANDO, FL",

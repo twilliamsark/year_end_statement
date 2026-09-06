@@ -4,4 +4,4 @@ $LOAD_PATH.unshift File.expand_path("../lib", __dir__)
 
 require "minitest/autorun"
 require "tmpdir"
-require "year_end_statements"
+require "cc_year_end_statement"

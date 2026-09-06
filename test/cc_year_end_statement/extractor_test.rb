@@ -2,7 +2,7 @@
 
 require "test_helper"
 
-class YearEndStatementsExtractorTest < Minitest::Test
+class CCYearEndStatementExtractorTest < Minitest::Test
   FakePage = Struct.new(:text)
   FakeReader = Struct.new(:page_count, :pages)
 
@@ -55,7 +55,7 @@ class YearEndStatementsExtractorTest < Minitest::Test
 
   def test_requires_a_settable_filename
     error = assert_raises(ArgumentError) do
-      YearEndStatements::Extractor.call(filename: nil, reader: fake_reader)
+      CCYearEndStatement::Extractor.call(filename: nil, reader: fake_reader)
     end
 
     assert_match(/filename is required/i, error.message)
@@ -63,12 +63,12 @@ class YearEndStatementsExtractorTest < Minitest::Test
 
   def test_raises_when_the_pdf_file_is_missing
     assert_raises(Errno::ENOENT) do
-      YearEndStatements::Extractor.call(filename: "/tmp/missing-year-end-summary.pdf")
+      CCYearEndStatement::Extractor.call(filename: "/tmp/missing-year-end-summary.pdf")
     end
   end
 
-  def test_extracts_categories_subcategories_and_transactions_from_a_year_end_statement
-    result = YearEndStatements::Extractor.call(
+  def test_extracts_categories_subcategories_and_transactions_from_a_cc_year_end_statement
+    result = CCYearEndStatement::Extractor.call(
       filename: "/statements/BoA_CC_YearEndSummary_2025.pdf",
       reader: fake_reader
     )
@@ -120,7 +120,7 @@ class YearEndStatementsExtractorTest < Minitest::Test
     path = "/Users/todd/Documents/BoA_CC_YearEndSummary_2025.pdf"
     skip "Year-end summary PDF is not available at #{path}" unless File.exist?(path)
 
-    result = YearEndStatements::Extractor.call(filename: path)
+    result = CCYearEndStatement::Extractor.call(filename: path)
 
     assert_equal path, result.filename
     assert_equal 14, result.page_count
@@ -136,7 +136,7 @@ class YearEndStatementsExtractorTest < Minitest::Test
   private
 
   def extract_sample
-    YearEndStatements::Extractor.call(
+    CCYearEndStatement::Extractor.call(
       filename: "BoA_CC_YearEndSummary_2025.pdf",
       reader: fake_reader
     )

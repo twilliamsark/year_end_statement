@@ -1,15 +1,15 @@
 # frozen_string_literal: true
 
-require_relative "lib/year_end_statements/version"
+require_relative "lib/cc_year_end_statement/version"
 
 Gem::Specification.new do |spec|
-  spec.name = "year_end_statements"
-  spec.version = YearEndStatements::VERSION
+  spec.name = "cc_year_end_statement"
+  spec.version = CCYearEndStatement::VERSION
   spec.authors = ["Todd"]
 
   spec.summary = "Parse Bank of America year-end summary PDFs and CSV files"
   spec.description = "Extract category, subcategory, and transaction data from Bank of America year-end summary PDFs and CSV exports."
-  spec.homepage = "https://github.com/twilliamsark/year_end_statement/blob/main/HOW_TO.md"
+  spec.homepage = "https://github.com/twilliamsark/cc_year_end_statement/blob/main/HOW_TO.md"
   spec.license = "MIT"
   spec.required_ruby_version = ">= 3.4"
 
@@ -25,7 +25,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rake"
 
   spec.metadata = {
-    "source_code_uri" => "https://github.com/twilliamsark/year_end_statement",
-    "documentation_uri" => "https://github.com/twilliamsark/year_end_statement/blob/main/HOW_TO.md"
+    "source_code_uri" => "https://github.com/twilliamsark/cc_year_end_statement",
+    "documentation_uri" => "https://github.com/twilliamsark/cc_year_end_statement/blob/main/HOW_TO.md"
   }
 end

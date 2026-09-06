@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module YearEndStatements
+module CCYearEndStatement
   class CSVWriter
     HEADERS = %w[date category subcategory description location amount].freeze
 

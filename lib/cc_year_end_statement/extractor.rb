@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module YearEndStatements
+module CCYearEndStatement
   class Extractor
     Result = Data.define(:filename, :page_count, :categories) do
       def transactions

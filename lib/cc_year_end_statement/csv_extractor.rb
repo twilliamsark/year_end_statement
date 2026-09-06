@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module YearEndStatements
+module CCYearEndStatement
   class CSVExtractor
     SUPPORTED_FIELD_SEPARATORS = ["|", ",", "\t", ";"].freeze
 
