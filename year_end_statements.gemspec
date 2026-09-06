@@ -23,4 +23,9 @@ Gem::Specification.new do |spec|
 
   spec.add_development_dependency "minitest"
   spec.add_development_dependency "rake"
+
+  spec.metadata = {
+    "source_code_uri" => "https://github.com/twilliamsark/year_end_statement",
+    "documentation_uri" => "https://github.com/twilliamsark/year_end_statement/blob/main/HOW_TO.md"
+  }
 end
