@@ -9,6 +9,7 @@ Gem::Specification.new do |spec|
 
   spec.summary = "Parse Bank of America year-end summary PDFs and CSV files"
   spec.description = "Extract category, subcategory, and transaction data from Bank of America year-end summary PDFs and CSV exports."
+  spec.homepage = "https://github.com/twilliamsark/year_end_statement/blob/main/HOW_TO.md"
   spec.license = "MIT"
   spec.required_ruby_version = ">= 3.4"
 
