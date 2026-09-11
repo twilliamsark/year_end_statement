@@ -1,4 +1,6 @@
 # frozen_string_literal: true
+require "digest"
+require "bigdecimal"
 
 module CCYearEndStatement
   class Extractor
@@ -16,7 +18,21 @@ module CCYearEndStatement
 
     Category = Data.define(:name, :total, :subcategories)
     Subcategory = Data.define(:name, :total, :transactions)
-    Transaction = Data.define(:date, :description, :location, :amount, :category, :subcategory)
+    Transaction = Data.define(:date, :description, :location, :amount, :category, :subcategory) do
+      def amount_to_cents(amount)
+        (BigDecimal(amount.to_s) * 100).to_i
+      end
+
+      def fingerprint
+        payload = [
+          date.to_s,
+          description[0, 21],
+          amount_to_cents(amount),
+        ].join("|")
+
+        Digest::MD5.hexdigest(payload)
+      end
+    end
 
     KNOWN_CATEGORIES = [
       "Merchandise",
